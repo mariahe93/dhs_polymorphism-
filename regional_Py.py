@@ -66,7 +66,7 @@ def common_list (myRegion, inds, selectInds):
 #Skips lines that aren't needed and header lines
 def numpy_array (line, comList):
 	if line.startswith('##') or line.startswith('#'): 
-		continue
+		return
 
         #Cast numList as a numpy.array
         mainLines = line.split('\t')
