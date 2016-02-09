@@ -15,10 +15,9 @@ def open_tabix (chr_Num):
                 myTabix = pysam.TabixFile('/net/akey/vol1/scratch/1KGenomes_VCF/ALL.%s.phase1_release_v3.20101123.snps_indels_svs.genotypes.vcf.bgz' %(chr_Pos))
                 header = myTabix.header
                 tabix_List.append(myTabix)
-#	return tabix_List
-	return header
+#	return tabix_List, header
 
-def VCF (header):
+#def VCF (header):
         for line in header:
                 #Skips line that aren't needed
                 if line.startswith('##'):
@@ -165,10 +164,11 @@ regions = open(args.r,"r")
 regions.readline()
 
 #Opens tabix files
-tabix_List = open_tabix(chr_Num)
+#tabix_List = open_tabix(chr_Num)
+inds = open_tabix(chr_Num)
 
 # Puts all individuals from VCF and tabix files into lists
-inds = VCF(header)
+#inds = VCF(header)
 
 #Finds position of common individuals
 all_Inds = common_inds(inds, selectInds)
