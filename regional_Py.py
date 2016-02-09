@@ -9,21 +9,14 @@ chr_Num = range(1,n+1)
 
 #Opening Tabix 
 def open_tabix (chr_Num):
-        #Gets a list of chr numbers
-#        n = 22
-#        chr_Num = range(1,n+1)
-
-#Opens tabix files
         
-#	n = 22 
-#	chr_Num = range(1,n+1)
-
 	for item in chr_Num:
                 chr_Pos = 'chr' + str(item)
                 myTabix = pysam.TabixFile('/net/akey/vol1/scratch/1KGenomes_VCF/ALL.%s.phase1_release_v3.20101123.snps_indels_svs.genotypes.vcf.bgz' %(chr_Pos))
                 header = myTabix.header
                 tabix_List.append(myTabix)
-	return tabix_List
+#	return tabix_List
+	return header
 
 def VCF (header):
         for line in header:
