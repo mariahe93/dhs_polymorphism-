@@ -35,14 +35,15 @@ def common_inds (inds, selectInds):
 		all_Inds.append(temp_List)
 	return all_Inds
 
-#def tabix_regions (regions):
-#	for line in regions:
 def tabix_regions (lines):
       	#gets chr, start, and stop
 	splt_Line = lines.split('\t')
 	chr_Pos = splt_Line[0]
 	start_Pos = int(splt_Line[1])
         stop_Pos = int(splt_Line[2])
+	
+	if chr_Pos = 'X' or 'Y':
+		return
 
 	#Gets number of chr
 	wordList = list(chr_Pos)
