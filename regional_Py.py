@@ -77,7 +77,7 @@ def numpy_array (line, comList):
         comp_array = numpy.array(comList)
 
         if len(ref_List) > 1 and len(alt_List) > 1:
-                continue
+                return
 
         #Subset with a list of the indices that correspond to the selectInds    
         pi_indList = num_array[comp_array]
@@ -88,7 +88,7 @@ def numpy_array (line, comList):
 
         #Skips lines that have more than one base pair
         if len(ref_List) > 1 and len(alt_List) > 1:
-                continue
+                return
 	return pi_indList
 
 def pi_variables(pi_indList):
