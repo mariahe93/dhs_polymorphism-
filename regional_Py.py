@@ -15,15 +15,13 @@ def open_tabix (chr_Num):
                 myTabix = pysam.TabixFile('/net/akey/vol1/scratch/1KGenomes_VCF/ALL.%s.phase1_release_v3.20101123.snps_indels_svs.genotypes.vcf.bgz' %(chr_Pos))
                 header = myTabix.header
                 tabix_List.append(myTabix)
-#	return tabix_List, header
 
-#def VCF (header):
-        for line in header:
-                #Skips line that aren't needed
-                if line.startswith('##'):
-                        continue
-                splt_Header = line.split('\t')
-                inds.append(splt_Header[9:])
+	        for line in header:
+        	        #Skips line that aren't needed
+			if line.startswith('##'):
+				continue
+	                splt_Header = line.split('\t')
+        	        inds.append(splt_Header[9:])
         return inds
 
 #Function for finding 
@@ -37,21 +35,22 @@ def common_inds (inds, selectInds):
 		all_Inds.append(temp_List)
 	return all_Inds
 
-def tabix_regions (regions):
-	for line in regions:
-  	     	#gets chr, start, and stop
-		splt_Line = line.split('\t')
-		chr_Pos = splt_Line[0]
-		start_Pos = int(splt_Line[1])
-        	stop_Pos = int(splt_Line[2])
+#def tabix_regions (regions):
+#	for line in regions:
+def tabix_regions (lines):
+      	#gets chr, start, and stop
+	splt_Line = lines.split('\t')
+	chr_Pos = splt_Line[0]
+	start_Pos = int(splt_Line[1])
+        stop_Pos = int(splt_Line[2])
 
-		#Gets number of chr
-		wordList = list(chr_Pos)
-        	numList = wordList[3:]
-        	chrList = ''.join(numList)
+	#Gets number of chr
+	wordList = list(chr_Pos)
+        numList = wordList[3:]
+        chrList = ''.join(numList)
 
-        	#Gets regions
-        	myRegion = tabix_List[int(chrList)-1].fetch(chrList, start_Pos, stop_Pos)
+        #Gets regions
+        myRegion = tabix_List[int(chrList)-1].fetch(chrList, start_Pos, stop_Pos)
 	return myRegion
 
 def common_list (myRegion, inds, selectInds):
@@ -164,17 +163,18 @@ regions = open(args.r,"r")
 regions.readline()
 
 #Opens tabix files
-#tabix_List = open_tabix(chr_Num)
 inds = open_tabix(chr_Num)
-
-# Puts all individuals from VCF and tabix files into lists
-#inds = VCF(header)
 
 #Finds position of common individuals
 all_Inds = common_inds(inds, selectInds)
 	
 #Gets tabix regions
-myRegion = tabix_regions(regions)
+#myRegion = tabix_regions(regions)
+for line in regions:
+	lines = line
+
+myRegion = tabix_regions(lines)
+
 
 #Find common individuals 	
 comList = common_list(myRegion, inds, selectInds)
