@@ -5,7 +5,7 @@ import numpy
 import pysam
 
 #Opening Tabix 
-#def open_tabix (chr_Num):
+def open_tabix:
         #Gets a list of chr numbers
 #        n = 22
 #        chr_Num = range(1,n+1)
@@ -14,7 +14,6 @@ import pysam
         
 	n = 22 
 	chr_Num = range(1,n+1)
-
 
 	for item in chr_Num:
                 chr_Pos = 'chr' + str(item)
