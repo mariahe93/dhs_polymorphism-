@@ -57,7 +57,7 @@ def tabix_regions (lines):
 #Skips lines that aren't needed and header lines
 def new_array(myRegion, all_Inds):
 	######need to iterate/fourloop over the region
-	for line in myRegion:
+	for line in all_Inds:
 		if line.startswith('##') or line.startswith('#'): 
 			return
 
@@ -171,27 +171,14 @@ for line in regions:
 
 	myRegion = tabix_regions(lines)
 
-#Find common individuals 	
-#	comList = common_list(myRegion, inds, selectInds)
-
 #Skips lines that aren't needed and header lines
-	pi_indList = new_array(line, comList)
+pi_indList = new_array(line, comList)
 
 #Gets pi variables
-	pi_calcList = pi_variables(pi_indList)
+pi_calcList = pi_variables(pi_indList)
 
 #Calculate pi (n)
-	pi = pi_calculation(pi_calcList)
+pi = pi_calculation(pi_calcList)
 
-	print pi
-	raw_input()
-
-                #Calculate pi (n^2)     
-#               for i in range(len(pi_calcList)-1):
-#                       for j in range(i+1,len(pi_calcList)):
-#                               if pi_calcList[i] != pi_calcList[j]:
-#                                       varTotal += 1
-                #Calculate mean pi      
-#               length = len(pi_calcList)       
-#               calc = float((length*(length-1))/2)
-#               meanPi = varTotal/calc
+print pi
+raw_input()
