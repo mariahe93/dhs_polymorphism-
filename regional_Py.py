@@ -42,7 +42,7 @@ def tabix_regions (lines):
 	start_Pos = int(splt_Line[1])
         stop_Pos = int(splt_Line[2])
 	
-	if chr_Pos = 'X' or 'Y':
+	if chr_Pos == 'X' or 'Y':
 		return
 
 	#Gets number of chr
@@ -54,40 +54,35 @@ def tabix_regions (lines):
         myRegion = tabix_List[int(chrList)-1].fetch(chrList, start_Pos, stop_Pos)
 	return myRegion
 
-def common_list (myRegion, inds, selectInds):
-	for line in myRegion:
-		for i in range(len(inds)):
-			for j in range(len(selectInds)):
-                	        if inds[i] == selectInds[j]:
-                 	               comList.append(i)
-	return comList
-
 #Skips lines that aren't needed and header lines
-def numpy_array (line, comList):
-	if line.startswith('##') or line.startswith('#'): 
-		return
+def new_array(myRegion, all_Inds):
+	######need to iterate/fourloop over the region
+	for line in myRegion:
+		if line.startswith('##') or line.startswith('#'): 
+			return
 
         #Cast numList as a numpy.array
-        mainLines = line.split('\t')
-        ref_List = mainLines[3]
-        alt_List = mainLines[4]
-        numList = mainLines[9:]
-        num_array = numpy.array(numList)
-        comp_array = numpy.array(comList)
+		mainLines = line.split('\t')
+	        ref_List = mainLines[3]
+       		alt_List = mainLines[4]
+        	numList = mainLines[9:]
+        	num_array = numpy.array(numList)
+        	comp_array = numpy.array(all_inds) #######change this to work with the correct element of the all_Inds list
 
-        if len(ref_List) > 1 and len(alt_List) > 1:
-                return
+        	if len(ref_List) > 1 and len(alt_List) > 1:
+                	return
 
         #Subset with a list of the indices that correspond to the selectInds    
-        pi_indList = num_array[comp_array]
+        	pi_indList = num_array[comp_array]
 
         #Gets ref and alt columnns
-        ref_List = mainLines[3]
-        alt_List = mainLines[4]
+        	ref_List = mainLines[3]
+        	alt_List = mainLines[4]
 
         #Skips lines that have more than one base pair
-        if len(ref_List) > 1 and len(alt_List) > 1:
-                return
+        	if len(ref_List) > 1 and len(alt_List) > 1:
+               		return
+	
 	return pi_indList
 
 def pi_variables(pi_indList):
@@ -174,23 +169,22 @@ all_Inds = common_inds(inds, selectInds)
 for line in regions:
 	lines = line
 
-myRegion = tabix_regions(lines)
-
+	myRegion = tabix_regions(lines)
 
 #Find common individuals 	
-comList = common_list(myRegion, inds, selectInds)
+#	comList = common_list(myRegion, inds, selectInds)
 
 #Skips lines that aren't needed and header lines
-pi_indList = numpy_array(line, comList)
+	pi_indList = new_array(line, comList)
 
 #Gets pi variables
-pi_calcList = pi_variables(pi_indList)
+	pi_calcList = pi_variables(pi_indList)
 
 #Calculate pi (n)
-pi = pi_calculation(pi_calcList)
+	pi = pi_calculation(pi_calcList)
 
-print pi
-raw_input()
+	print pi
+	raw_input()
 
                 #Calculate pi (n^2)     
 #               for i in range(len(pi_calcList)-1):
