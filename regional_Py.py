@@ -55,17 +55,17 @@ def tabix_regions (lines):
 	return myRegion
 
 #Skips lines that aren't needed and header lines
-def new_array(region, all_Inds):
+def new_array(lines, all_Inds):
 	######need to iterate/fourloop over the region
-	for line in all_Inds:
+	for line in lines:
 		if line.startswith('##') or line.startswith('#'): 
 			return
 
         #Cast numList as a numpy.array
 		mainLines = line.split('\t')
-	        ref_List = mainLines[3]
-       		alt_List = mainLines[4]
-        	numList = mainLines[9:]
+		ref_List = mainLines[3]
+		alt_List = mainLines[4]
+		numList = mainLines[9:]
         	num_array = numpy.array(numList)
         	comp_array = numpy.array(all_Inds) #######change this to work with the correct element of the all_Inds list
 
@@ -168,9 +168,7 @@ all_Inds = common_inds(inds, selectInds)
 #myRegion = tabix_regions(regions)
 for line in regions:
 	lines = line
-
 	myRegion = tabix_regions(lines)
-
 
 #Skips lines that aren't needed and header lines
 	pi_indList = new_array(line, comList)
