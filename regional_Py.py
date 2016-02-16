@@ -55,7 +55,7 @@ def tabix_regions (lines):
 	return myRegion
 
 #Skips lines that aren't needed and header lines
-def new_array(myRegion, all_Inds):
+def new_array(region, all_Inds):
 	######need to iterate/fourloop over the region
 	for line in all_Inds:
 		if line.startswith('##') or line.startswith('#'): 
@@ -67,7 +67,7 @@ def new_array(myRegion, all_Inds):
        		alt_List = mainLines[4]
         	numList = mainLines[9:]
         	num_array = numpy.array(numList)
-        	comp_array = numpy.array(all_inds) #######change this to work with the correct element of the all_Inds list
+        	comp_array = numpy.array(all_Inds) #######change this to work with the correct element of the all_Inds list
 
         	if len(ref_List) > 1 and len(alt_List) > 1:
                 	return
@@ -171,14 +171,15 @@ for line in regions:
 
 	myRegion = tabix_regions(lines)
 
+
 #Skips lines that aren't needed and header lines
-pi_indList = new_array(line, comList)
+	pi_indList = new_array(line, comList)
 
 #Gets pi variables
-pi_calcList = pi_variables(pi_indList)
+	pi_calcList = pi_variables(pi_indList)
 
 #Calculate pi (n)
-pi = pi_calculation(pi_calcList)
+	pi = pi_calculation(pi_calcList)
 
-print pi
-raw_input()
+#print pi
+#raw_input()
