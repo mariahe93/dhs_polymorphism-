@@ -41,8 +41,8 @@ def tabix_regions (lines):
 	chr_Pos = splt_Line[0]
 	start_Pos = int(splt_Line[1])
         stop_Pos = int(splt_Line[2])
-	
-	if chr_Pos == 'X' or 'Y':
+
+	if (chr_Pos == 'X') or (chr_Pos == 'Y'):
 		return
 
 	#Gets number of chr
@@ -170,14 +170,20 @@ for line in regions:
 	lines = line
 	myRegion = tabix_regions(lines)
 
-	if type(myRegion) == 'NoneType':
+	if myRegion is None:
 		continue
+	
+	print myRegion
 
 	#Skips lines that aren't needed and header lines
 	pi_indList = new_array(myRegion, all_Inds) #should process lines from a VCF
 
+	print pi_indList
+
 	#Gets pi variables
 	pi_calcList = pi_variables(pi_indList)
+
+	print pi_calcList
 
 	#Calculate pi (n)
 	pi = pi_calculation(pi_calcList)
