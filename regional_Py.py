@@ -55,9 +55,9 @@ def tabix_regions (lines):
 	return myRegion
 
 #Skips lines that aren't needed and header lines
-def new_array(region, all_Inds):
+def new_array(myRegion, all_Inds):
 	######need to iterate/fourloop over the region
-	for line in region:
+	for line in myRegion:
 		if line.startswith('##') or line.startswith('#'): 
 			return
 
@@ -170,6 +170,9 @@ for line in regions:
 	lines = line
 	myRegion = tabix_regions(lines)
 
+	if type(myRegion) == 'NoneType':
+		continue
+
 	#Skips lines that aren't needed and header lines
 	pi_indList = new_array(myRegion, all_Inds) #should process lines from a VCF
 
@@ -179,5 +182,5 @@ for line in regions:
 	#Calculate pi (n)
 	pi = pi_calculation(pi_calcList)
 
-#print pi
-#raw_input()
+	print pi
+	raw_input()
