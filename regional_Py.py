@@ -57,9 +57,10 @@ def tabix_regions (lines):
 #Skips lines that aren't needed and header lines
 def new_array(myRegion, all_Inds):
 	######need to iterate/fourloop over the region
+	pi_indList = None
 	for line in myRegion:
 		if line.startswith('##') or line.startswith('#'): 
-			return
+			continue
 
         #Cast numList as a numpy.array
 		mainLines = line.split('\t')
@@ -68,14 +69,13 @@ def new_array(myRegion, all_Inds):
 		numList = mainLines[9:]
         	num_array = numpy.array(numList)
         	comp_array = numpy.array(all_Inds) #######change this to work with the correct element of the all_Inds list
-
         	if len(ref_List) > 1 and len(alt_List) > 1:
-                	return
+                	continue #probably these returns should just be continues
 
         #Subset with a list of the indices that correspond to the selectInds    
         	pi_indList = num_array[comp_array]
-
-        #Gets ref and alt columnns
+	 
+	#Gets ref and alt columnns
         	ref_List = mainLines[3]
         	alt_List = mainLines[4]
 
@@ -92,17 +92,18 @@ def pi_variables(pi_indList):
         oneList = []
 
         for item in pi_indList:
-                pi_numList = item.split(':')
-                piNum = pi_numList[0]
+		for h in item:
+	       		pi_numList = h.split(':')
+                	piNum = pi_numList[0]
 
                 #Split line by '|' 
-                piNumSplit = piNum.split('|') #gives string of numbers
+                	piNumSplit = piNum.split('|') #gives string of numbers
 
                 #Changes values to integers and adds them to a list
-                x = int(piNumSplit[0])
-                y = int(piNumSplit[1])
-                pi_calcList.append(x)
-                pi_calcList.append(y)
+                	x = int(piNumSplit[0])
+                	y = int(piNumSplit[1])
+                	pi_calcList.append(x)
+                	pi_calcList.append(y)
 
 	return pi_calcList
       
@@ -172,18 +173,15 @@ for line in regions:
 
 	if myRegion is None:
 		continue
-	
-	print myRegion
 
 	#Skips lines that aren't needed and header lines
 	pi_indList = new_array(myRegion, all_Inds) #should process lines from a VCF
 
-	print pi_indList
-
+	if pi_indList is None:
+		continue
+	
 	#Gets pi variables
 	pi_calcList = pi_variables(pi_indList)
-
-	print pi_calcList
 
 	#Calculate pi (n)
 	pi = pi_calculation(pi_calcList)
