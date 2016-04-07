@@ -215,7 +215,7 @@ for line in regions:
 	#Calculate pi (n)
 	piTotal = pi_calculation(pi_calcList)
 
-	final_Pi = piTotal/((stop_Pos - start_Pos + 1)*2)
+	final_Pi = piTotal/((stop_Pos - start_Pos + 1)+2*(pad))
 	print chr_Pos, start_Pos, stop_Pos, inds_Pos, len_Pos, num_Inds, final_Pi
 #	print "%s\t%f"%(line.strip(), pi)
 #	raw_input()
